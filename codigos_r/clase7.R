@@ -1,4 +1,4 @@
-library(magrittr)
+
 set.seed(1234)
 
 eps <- .05
@@ -20,10 +20,9 @@ abline(h = c(-eps,eps), col = "grey20", lwd = 3, lty = 2)
 
 N <- 200:500
 
-res2 <- apply(res, 1, \(x) mean(abs(x)> eps)) %>% 
-  .[N]
-
-plot(x = N, res2, type = "o", pch = 20)
+apply(res, 1, \(x) mean(abs(x)> eps)) %>% 
+  .[N] %>% 
+  plot(x = N, type = "o", pch = 20)
 curve(p*(1-p)/x/eps^2, add =T, col = 4, lwd = 2)
 curve(1/x, add = T, col = 2, lwd = 2, n = 1001)
 
