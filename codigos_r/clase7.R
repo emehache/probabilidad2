@@ -1,28 +1,31 @@
 
+
+# -------------------------------------------------------------------------
+library(magrittr)
+
 set.seed(1234)
 
-eps <- .05
+eps <- .1
 # n <- 5e3
 n <- 500
-m <- 5e4
+m <- 5e3
 p <- .5
 res <- replicate(m, {
   X <- sample(0:1, n, prob = c(1-p, p), rep = T)
-  (cumsum(X)/(1:n)) - p
+  (cumsum(X)/(1:n))
 })
 
 matplot(1:n, res, type = "l")
-abline(h = 0, col = "grey20", lwd = 3)
-abline(h = c(-eps,eps), col = "grey20", lwd = 3, lty = 2)
+abline(h = p, col = "grey20", lwd = 3)
+abline(h = c(p-eps,p+eps), col = "grey20", lwd = 3, lty = 2)
 
 
 # -------------------------------------------------------------------------
 
-N <- 200:500
+res2 <- apply(res, 1, \(x) mean(abs(x-p)> eps))
 
-apply(res, 1, \(x) mean(abs(x)> eps)) %>% 
-  .[N] %>% 
-  plot(x = N, type = "o", pch = 20)
+N <- 200:500
+plot(x = N, res2[N], type = "o", pch = 20)
 curve(p*(1-p)/x/eps^2, add =T, col = 4, lwd = 2)
 curve(1/x, add = T, col = 2, lwd = 2, n = 1001)
 
