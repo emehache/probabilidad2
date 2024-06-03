@@ -131,7 +131,7 @@ invisible(
 
 u <- runif(1)
 
-#png(file="gif/gif%03d.png", width=600, height=600)
+png(file="gif/gif%03d.png", width=600, height=600)
 invisible(
   sapply(1:nrow(M), function(i){
     inf <- (M[i,2]-1)/M[i,1]
@@ -140,11 +140,11 @@ invisible(
     points(u,as.numeric(u<sup && u > inf),col=4,pch=20)
     value <- as.numeric(u<sup && u > inf)
     text(.8,.7,sprintf("X_%d = %s", i, value))
-    Sys.sleep(.1)
+    # Sys.sleep(.1)
     cat(sprintf("X_%03d = %s \n", i, value))
   } )
 )
-#dev.off()
+dev.off()
 #system("convert -delay 50 gif/*.png animacion.gif")
 
 
